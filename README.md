@@ -1,62 +1,18 @@
-# AI Startup Idea Generator
+---
+title: Startups AI Generator
+emoji: 🚀
+colorFrom: blue
+colorTo: purple
+sdk: docker
+pinned: false
+---
 
-AI-Powered System That analyze The Egyptian market problems and generate a new startup ideas inspired by an foreign ones.
-## Features
-- Intent detection
-- Problem extraction
-- Reasoning router
-- RAG-based idea retrieval
-- AI startup idea generation
-- FastAPI backend
+# Startups AI Generator
 
-## Project Structure
-```
-app/
-│
-├── src/
-| ├── chat_Schemas
-|   └── schemas.py
-│ ├── engine/
-│ | ├── core/
-| |    ├── intent_classification.py
-| |    └── reasoning_router.py
-│ │ └── rag/
-| |    └── retriver.py
-│ 
-│ ├── llm/
-│ │ ├── base.py
-│ │ └── groq_provider.py
-│ │
-│ ├── prompt_Engineering/
-│ │ ├── templates.py
-│ │ └── few_shot.py
-│
-│
-├── main.py
-```
-## Installation
-Clone the repository
-```
-git clone https://github.com/username/startup-ai-generator.git
-```
-Install dependencies
-```
-pip install -r requirments.txt
-```
-Run the server
-```
-uvicorn app.main:app --reload
-```
+AI-powered startup idea generator based on problem descriptions.
 
-## Technologies
+## API Endpoints
 
-- FastAPI
-- Groq LLM
-- Python
-- RAG Architecture
-- Prompt Engineering
-
-## Future Improvements
-
-- Improve intent classification
-- Multi-agent reasoning
+- `POST /chat` - Generate startup ideas
+- `GET /health` - Health check
+- `GET /docs` - Swagger UI
