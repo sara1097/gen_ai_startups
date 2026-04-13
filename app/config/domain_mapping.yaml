@@ -1,0 +1,718 @@
+STARTUP_SECTOR_GROUPS:
+  "Healthcare & MedTech":
+    - HealthTech
+    - MedTech
+    - Health
+    - Digital Health
+    - Telehealth
+    - Telemedicine
+    - Mental Health
+    - Clinical AI
+    - Medical
+    - Medical Admin
+    - Medical Coding
+    - Medical Imaging
+    - Doctor Booking
+    - Hospital Mgmt
+    - Hospital System
+    - Home Health
+    - Chronic Care
+    - Diagnostics
+    - Dental
+    - Dental Tech
+    - Elderly Care
+    - FemTech
+    - Health Data
+    - Health IT
+    - Health Insurance
+    - Community Health
+    - Public Health
+    - Pharmacy
+    - e-Pharmacy
+    - Home Care
+    - Mobile Health
+    - Patient Engagement
+    - Patient Comm
+    - Patient Support
+    - Teleradiology
+    - Wearable
+    - Nutrition
+    - Queue Mgmt
+    - Queue Management
+    - Scheduling
+    - Appointment Booking
+    - Booking
+    - Booking Software
+
+  "FinTech & Finance":
+    - FinTech
+    - Finance
+    - Banking
+    - Banking API
+    - Neobank
+    - Core Banking
+    - Payments
+    - Payments API
+    - Mobile Payments
+    - Global Payments
+    - Cross-Border Payments
+    - Crypto
+    - DeFi
+    - Lending
+    - P2P Lending
+    - Micro-Lending
+    - BNPL
+    - Insurance
+    - InsureTech
+    - Payroll
+    - Tax
+    - Personal Finance
+    - Wealth Tech
+    - Robo-Advisor
+    - Accounting
+    - Invoicing
+    - Billing
+    - Expense Management
+    - Corporate Card
+    - Cash Flow Mgmt
+    - Investment Platform
+    - Stock Trading
+    - Crypto Trading
+
+  "Developer Tools":
+    - DevTools
+    - Dev
+    - API
+    - API Platform
+    - Backend
+    - CI/CD
+    - Cloud
+    - Cloud Computing
+    - Cloud Hosting
+    - Cloud Infrastructure
+    - Code Gen
+    - Coding
+    - Database
+    - DevOps
+    - Framework
+    - Frontend
+    - GraphQL Engine
+    - IDE
+    - Infrastructure
+    - Kubernetes
+    - Monitoring
+    - Open Source
+    - Serverless Database
+    - Testing
+    - Version Control
+    - Error Monitoring
+
+  "AI & Automation":
+    - AI
+    - AI API
+    - AI Agent
+    - AI Analytics
+    - AI Assistant
+    - AI Automation
+    - AI Builder
+    - AI Content
+    - AI Design
+    - AI Infrastructure
+    - AI Writing
+    - AI workflows
+    - Automation
+    - Autonomous Agents
+    - Generative AI
+    - LLM
+    - LLM API
+    - Machine Learning
+    - ML Ops
+    - NLP
+    - Deep Learning
+    - Edge AI
+    - No-Code AI
+    - Industrial AI
+    - Real-Time AI
+
+  "Marketing & Sales":
+    - MarketingTech
+    - Marketing
+    - Marketing Automation
+    - Marketing Suite
+    - Digital Marketing
+    - Email Marketing
+    - SMS Marketing
+    - SEO
+    - SEO AI
+    - SEO Tool
+    - CRM
+    - CRM Automation
+    - Sales AI
+    - Sales Automation
+    - Lead Gen
+    - Lead Generation
+    - Ad Tech
+    - Ad Automation
+    - Content
+    - Content AI
+    - Content Creation
+    - Copywriting
+    - Conversion
+
+  "HR & Recruitment":
+    - HR Tech
+    - HRIS
+    - HRMS
+    - HCM
+    - HR Software
+    - Global HR
+    - Recruitment
+    - Recruitment AI
+    - Hiring
+    - Staffing
+    - Payroll
+    - Employee Engagement
+    - Employee Experience
+    - Performance Mgmt
+    - People Analytics
+    - L&D
+    - LMS
+    - Skill Development
+    - Career
+    - Career Coaching
+    - Onboarding
+    - Workforce Management
+
+  "E-commerce & Retail":
+    - E-commerce
+    - Ecommerce
+    - Retail
+    - Headless Commerce
+    - Social Commerce
+    - Live Shopping
+    - Quick Commerce
+    - On-Demand Delivery
+    - Delivery App
+    - Food Delivery
+    - Marketplace
+    - Inventory
+    - Checkout
+    - Shopping
+    - Price Comparison
+    - Loyalty
+    - Loyalty Program
+    - Store Builder
+    - B2B Retail
+
+  "Productivity & PM":
+    - Productivity
+    - Project Management
+    - Task Management
+    - Work Management
+    - Workflow
+    - Workflow Automation
+    - Calendar
+    - Scheduling
+    - Enterprise Scheduling
+    - Time Tracking
+    - Collaboration
+    - Team Chat
+    - Team Workspace
+    - Note Taking
+    - Knowledge
+    - Knowledge Management
+    - Document Management
+    - Document AI
+    - Forms
+    - Kanban Boards
+    - OKRs
+    - Goal Management
+
+  "Education & Learning":
+    - EdTech
+    - Education
+    - E-learning
+    - Learning
+    - LMS
+    - Course Platform
+    - Tutoring
+    - AI Tutor
+    - K-12 Education
+    - Language Learning
+    - Coding Bootcamp
+    - Microlearning
+    - Virtual Classroom
+    - Teacher Assistant
+
+  "Travel & Tourism":
+    - TravelTech
+    - Travel
+    - Flight Booking
+    - Hotel Tech
+    - OTA
+    - Tour Marketplace
+    - Trip Planning
+    - Accommodation
+    - Short-Term Rentals
+    - Vacation Rentals
+    - Hospitality
+    - Adventure Travel
+    - Business Travel
+    - AI Travel Agent
+    - AI Trip Planner
+
+  "Logistics & Supply Chain":
+    - Logistics
+    - Supply Chain
+    - Last-Mile
+    - Last-Mile Delivery
+    - Freight
+    - Freight Marketplace
+    - Trucking Marketplace
+    - Shipping Services
+    - Cargo Tech
+    - Inventory Mgmt
+    - Procurement
+    - WMS
+    - TMS
+
+  "Real Estate & Construction":
+    - Real Estate
+    - Real Estate Marketplace
+    - Property Management
+    - Property Mgmt
+    - Property Inspection
+    - Fractional Real Estate
+    - Rental Management
+    - Student Housing
+    - Flexible Housing
+    - Construction
+    - Construction Tech
+    - Facility Management
+
+  "Social & Community":
+    - Social Media
+    - Social Network
+    - Community
+    - Community Platform
+    - Community Builder
+    - Community Management
+    - Niche Community
+    - Professional Network
+    - Professional Networking
+    - Non-Profit
+    - Impact Investing
+    - Civic Tech
+    - Democracy
+    - Humanitarian Aid
+
+  "Design & Creative":
+    - Design Tools
+    - Design
+    - UI Design
+    - UI Builder
+    - UI/UX Design
+    - Graphic Design
+    - Vector Design
+    - Animation
+    - 3D Design
+    - 3D Printing
+    - Video Editing
+    - Photo Editing
+    - Image Gen
+    - Creative Automation
+    - Motion Design
+    - Illustration
+    - Presentation AI
+    - Diagramming
+    - Whiteboard
+
+  "Agriculture & Environment":
+    - AgriTech
+    - Agriculture
+    - Sustainable Agriculture
+    - Farm Management
+    - Precision Farming
+    - Fisheries
+    - Environment
+    - CleanTech
+    - Solar Energy
+    - Energy Management
+    - Carbon Accounting
+    - Sustainability
+    - Waste Mgmt
+    - Water
+    - Green Finance
+    - Recycling
+
+  "Government & Public Services":
+    - Civic Tech
+    - GovTech
+    - e-Governance
+    - Public Health
+    - Public Safety
+    - Digital Identity
+    - Open Data
+    - Geospatial
+    - GIS
+    - Urban Planning
+    - Smart Cities
+    - Smart Infrastructure
+    - Mass Transit
+    - Smart Mobility
+
+  "Mobility & Transportation":
+    - MobilityTech
+    - Mobility
+    - Ride Hailing
+    - Carpooling
+    - Car Sharing
+    - Car Rental
+    - EV
+    - Charging
+    - Connected Car
+    - Air Mobility
+    - eVTOL
+    - Maritime Tracking
+    - Drones
+    - Navigation
+    - Traffic App
+    - Transport Booking
+
+  "Food & Beverage":
+    - FoodTech
+    - Food Delivery
+    - Restaurant
+    - Restaurant Tech
+    - Cloud Kitchens
+    - E-Grocery
+    - Meal Planning
+    - Nutrition
+    - Cooking
+    - B2B Food Supply
+
+  "Security & Privacy":
+    - Cybersecurity
+    - Security
+    - Cloud Security
+    - Privacy
+    - Privacy AI
+    - Privacy Compliance
+    - Authentication
+    - Identity Verification
+    - Secure Messaging
+    - Compliance
+    - Fraud Prevention
+    - Safety
+    - Public Safety
+
+  "Media & Entertainment":
+    - Media
+    - Entertainment
+    - Music
+    - Music Streaming
+    - Podcasting
+    - Video
+    - Video Streaming
+    - Live Streaming
+    - Gaming
+    - Gamification
+    - Books
+    - E-books
+    - Audiobooks
+    - News
+    - Newsletter
+    - Digital Publishing
+
+
+PROBLEM_TO_STARTUP_GROUPS:
+  Healthcare:
+    - Healthcare & MedTech
+    - AI & Automation
+  Health:
+    - Healthcare & MedTech
+    - AI & Automation
+  healthcare:
+    - Healthcare & MedTech
+    - AI & Automation
+  "Tourism / Healthcare":
+    - Healthcare & MedTech
+    - Travel & Tourism
+  "Healthcare / Education":
+    - Healthcare & MedTech
+    - Education & Learning
+  "Environment / Health":
+    - Healthcare & MedTech
+    - Agriculture & Environment
+  Veterinary:
+    - Healthcare & MedTech
+  Finance:
+    - FinTech & Finance
+    - AI & Automation
+  Fintech:
+    - FinTech & Finance
+    - AI & Automation
+  "Finance / Legal":
+    - FinTech & Finance
+    - Government & Public Services
+  "Finance / Real Estate":
+    - FinTech & Finance
+    - Real Estate & Construction
+  "Insurance / Fintech":
+    - FinTech & Finance
+  "Financial Services":
+    - FinTech & Finance
+  Economy:
+    - FinTech & Finance
+  Transportation:
+    - Mobility & Transportation
+    - Logistics & Supply Chain
+  transportation:
+    - Mobility & Transportation
+    - Logistics & Supply Chain
+  Transport:
+    - Mobility & Transportation
+    - Logistics & Supply Chain
+  Logistics:
+    - Logistics & Supply Chain
+    - Mobility & Transportation
+  "Supply Chain":
+    - Logistics & Supply Chain
+  "Tourism / Transport":
+    - Mobility & Transportation
+    - Travel & Tourism
+  Automotive:
+    - Mobility & Transportation
+  Auto:
+    - Mobility & Transportation
+  Education:
+    - Education & Learning
+    - AI & Automation
+  education:
+    - Education & Learning
+    - AI & Automation
+  "Education / Employment":
+    - Education & Learning
+    - HR & Recruitment
+  "Education / Innovation":
+    - Education & Learning
+    - AI & Automation
+  "Education / Research":
+    - Education & Learning
+  "Family / Education":
+    - Education & Learning
+  Government:
+    - Government & Public Services
+    - AI & Automation
+  GovTech:
+    - Government & Public Services
+  "GovTech / Legal":
+    - Government & Public Services
+  "Public Services":
+    - Government & Public Services
+  "public administration":
+    - Government & Public Services
+  "Public Administration":
+    - Government & Public Services
+  "Smart City":
+    - Government & Public Services
+  "Smart Cities":
+    - Government & Public Services
+  "Urban Planning":
+    - Government & Public Services
+  "Urban Infrastructure":
+    - Government & Public Services
+  "urban infrastructure":
+    - Government & Public Services
+  Agriculture:
+    - Agriculture & Environment
+    - AI & Automation
+  agriculture:
+    - Agriculture & Environment
+  "Agriculture / Industry":
+    - Agriculture & Environment
+  "Energy / Agriculture":
+    - Agriculture & Environment
+  Agri:
+    - Agriculture & Environment
+  Environment:
+    - Agriculture & Environment
+  environment:
+    - Agriculture & Environment
+  Energy:
+    - Agriculture & Environment
+  "Energy/Mining":
+    - Agriculture & Environment
+  Waste:
+    - Agriculture & Environment
+  Water:
+    - Agriculture & Environment
+  "Real Estate":
+    - Real Estate & Construction
+  Construction:
+    - Real Estate & Construction
+  Housing:
+    - Real Estate & Construction
+  "Real Estate / Services":
+    - Real Estate & Construction
+  "Real Estate / Hospitality":
+    - Real Estate & Construction
+    - Travel & Tourism
+  "Housing / Legal":
+    - Real Estate & Construction
+  Retail:
+    - E-commerce & Retail
+  Commerce:
+    - E-commerce & Retail
+  commerce:
+    - E-commerce & Retail
+  Trade:
+    - E-commerce & Retail
+  Legal:
+    - Government & Public Services
+    - AI & Automation
+  Law:
+    - Government & Public Services
+  "Technology / Legal":
+    - Developer Tools
+    - Government & Public Services
+  "Business / Legal":
+    - Government & Public Services
+  Employment:
+    - HR & Recruitment
+    - AI & Automation
+  "Gig Economy":
+    - HR & Recruitment
+  Labor:
+    - HR & Recruitment
+  HR:
+    - HR & Recruitment
+  "Food & Beverage":
+    - Food & Beverage
+    - E-commerce & Retail
+  Food:
+    - Food & Beverage
+  Hospitality:
+    - Food & Beverage
+    - Travel & Tourism
+  Tourism:
+    - Travel & Tourism
+  Travel:
+    - Travel & Tourism
+  Recreation:
+    - Travel & Tourism
+    - Media & Entertainment
+  Manufacturing:
+    - AI & Automation
+    - Logistics & Supply Chain
+  Industry:
+    - AI & Automation
+    - Logistics & Supply Chain
+  "Industry / Manufacturing":
+    - AI & Automation
+    - Logistics & Supply Chain
+  Technology:
+    - Developer Tools
+    - AI & Automation
+  Tech:
+    - Developer Tools
+    - AI & Automation
+  "digital & telecom":
+    - Developer Tools
+    - Media & Entertainment
+  Telecommunications:
+    - Developer Tools
+    - Media & Entertainment
+  Telecom:
+    - Developer Tools
+    - Media & Entertainment
+  Social:
+    - Social & Community
+  Non-Profit:
+    - Social & Community
+  "Social Impact":
+    - Social & Community
+  "Social Services":
+    - Social & Community
+  "Social Protection":
+    - Social & Community
+  Creative:
+    - Design & Creative
+    - Media & Entertainment
+  "Creative Services":
+    - Design & Creative
+  "Creative Industries":
+    - Design & Creative
+  Media:
+    - Media & Entertainment
+  Entertainment:
+    - Media & Entertainment
+  "Arts / Culture":
+    - Design & Creative
+    - Media & Entertainment
+  Arts:
+    - Design & Creative
+  Sports:
+    - Media & Entertainment
+  "Sports / Recreation":
+    - Media & Entertainment
+  Safety:
+    - Security & Privacy
+  Marketing:
+    - Marketing & Sales
+  Business:
+    - Productivity & PM
+    - Marketing & Sales
+  "Business Services":
+    - Productivity & PM
+  Services:
+    - Productivity & PM
+  "Startup Ecosystem":
+    - Productivity & PM
+    - FinTech & Finance
+  Utilities:
+    - Government & Public Services
+  utilities:
+    - Government & Public Services
+  "Public Sector":
+    - Government & Public Services
+  "Urban Living":
+    - Real Estate & Construction
+  Wellness:
+    - Healthcare & MedTech
+  Lifestyle:
+    - Healthcare & MedTech
+    - Media & Entertainment
+  Fashion:
+    - E-commerce & Retail
+    - Design & Creative
+  Beauty:
+    - E-commerce & Retail
+  Family:
+    - Social & Community
+  "Family / Tech":
+    - Social & Community
+    - AI & Automation
+  Science:
+    - Developer Tools
+    - AI & Automation
+  Research:
+    - Developer Tools
+    - AI & Automation
+  Events:
+    - Marketing & Sales
+    - Productivity & PM
+  Insurance:
+    - FinTech & Finance
+  Fisheries:
+    - Agriculture & Environment
+  Mining:
+    - Agriculture & Environment
+  Parks:
+    - Travel & Tourism
+
+BOILERPLATE_SIGNALS : 
+    - the program addresses these needs by offering targeted interventions
+    - may currently rely on manual workarounds or a patchwork of generic tools
+    - ecosystem engagement, founder readiness training
+    - this makes it easier for people to stay organized
