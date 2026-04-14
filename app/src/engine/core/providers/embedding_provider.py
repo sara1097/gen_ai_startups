@@ -9,7 +9,7 @@ class HFEmbeddingProvider:
 
     def __init__(self):
         self.client = InferenceClient(token=os.getenv("HF_TOKEN"))
-        self.model = "all-mpnet-base-v2"
+        self.model = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
 
     def encode(self, text: str):
         if not text:
