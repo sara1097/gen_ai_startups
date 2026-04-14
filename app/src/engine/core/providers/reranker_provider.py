@@ -5,7 +5,7 @@ from huggingface_hub import InferenceClient
 class HFRerankerProvider:
     def __init__(self):
         self.client = InferenceClient(token=os.getenv("HF_TOKEN"))
-        self.model = "BAAI/bge-reranker-base"
+        self.model = "cross-encoder/ms-marco-MiniLM-L-6-v2"
 
     def score(self, query: str, doc: str) -> float:
         if not query or not doc:
