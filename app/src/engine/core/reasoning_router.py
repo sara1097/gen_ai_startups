@@ -22,7 +22,8 @@ def route_reasoning(
     data: Dict, 
     domain: list, 
     isNewConversation: bool,
-    conversationId: str
+    conversationId: str,
+    clientMessageId: str
 ) -> Dict:
    
     
@@ -152,6 +153,7 @@ def route_reasoning(
             content=content,
             conversationId=conversationId,
             conversation_title=conversation_title,
+            clientMessageId = clientMessageId,
             role='ai',
             is_idea_saved=False,
             is_full_idea=is_idea,
@@ -162,6 +164,7 @@ def route_reasoning(
         return ChatResponse(
             content=content,
             conversationId=conversationId,
+            clientMessageId = clientMessageId,
             role='ai',
             is_idea_saved=False,
             is_full_idea=is_idea,
