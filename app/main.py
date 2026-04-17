@@ -15,6 +15,8 @@ from app.src.engine.core.reasoning_router import route_reasoning
 
 app = FastAPI(title="Startup AI Service")
 
+logger = logging.getLogger(__name__)
+
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: Request):
     body = await request.json()
