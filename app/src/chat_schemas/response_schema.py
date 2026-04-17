@@ -7,7 +7,7 @@ class IntentSchema(BaseModel):
 
 class ChatResponse(BaseModel):
     content: str
-    conversationId: str
+    conversationId: int
     conversation_title:Optional[str]
     clientMessageId: str = None
     role: str = 'ai'
@@ -19,7 +19,7 @@ class ChatResponse(BaseModel):
 
 class ChatRequest(BaseModel):
     content: str
-    conversationId: str
+    conversationId: int
     isNewConversation: bool 
     clientMessageId: str = None
     domain: Optional[str] = None
