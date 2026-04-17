@@ -19,7 +19,7 @@ class ChatRequest(BaseModel):
     conversationId: str
     isNewConversation: bool 
     clientMessageId: str = None
-    sectors: Optional[str] = None
+    domain: Optional[str] = None
     data: Optional[Dict] = None
 
 
