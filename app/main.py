@@ -55,6 +55,8 @@ async def chat_endpoint(request: Request):
             domain=parsed_request.domain
         )
 
+        logger.debug(f"response {result}")
+
         logger.info("Response generated successfully")
 
     except Exception as e:
