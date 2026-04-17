@@ -8,7 +8,7 @@ class IntentSchema(BaseModel):
 class ChatResponse(BaseModel):
     content: str
     conversationId: int
-    conversation_title:Optional[str]
+    conversation_title:Optional[str]= None
     clientMessageId: str = None
     role: str = 'ai'
     is_idea_saved: bool = False
