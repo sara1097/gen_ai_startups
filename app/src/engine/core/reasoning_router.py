@@ -20,7 +20,7 @@ llm_provider = groq_provider()
 def route_reasoning(
     user_input: str, 
     data: Dict, 
-    domain: str, 
+    domain: list, 
     isNewConversation: bool,
     conversationId: str
 ) -> Dict:
@@ -43,7 +43,7 @@ def route_reasoning(
         try:
             df = pd.read_excel('data/raw/Problems.xlsx')
             random_domain_based_problem = df[
-                df['problem_sector'].str.lower() == domain.lower()
+                df['problem_sector'].str.lower().isin(domain)
             ].sample(n=1)['problem_description'].values[0]
             extracted = extract_problem_and_requirements(random_domain_based_problem)
             print(f"Random domain based problem: {random_domain_based_problem}\n")
@@ -118,7 +118,7 @@ def route_reasoning(
             "raw_text": "No idea data generated"
         }
 
-    structured_data['inspired_by'] = inspired_by
+    structured_data = structured_data.add('inspired_by', inspired_by)
     
     # Step 5: Build unified prompt (to generate the response's content)
     logger.info(f"Building unified prompt...")
