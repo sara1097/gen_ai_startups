@@ -20,12 +20,9 @@ def chat_endpoint(request: ChatRequest):
         user_input=request.content,
         data=request.data,
         isNewConversation=request.isNewConversation,
+        clientMessageId = request.clientMessageId,
         conversationId=request.conversationId,
-        domain=request.sectors
+        domain=request.domain
     )
 
     return result
-
-
-
-    
