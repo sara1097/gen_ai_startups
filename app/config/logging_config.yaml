@@ -2,21 +2,15 @@ version: 1
 disable_existing_loggers: false
 
 formatters:
-  default:
+  simple:
     format: "%(asctime)s | %(levelname)s | %(name)s | %(message)s"
 
 handlers:
   console:
     class: logging.StreamHandler
-    level: INFO
-    formatter: default
-
-  file:
-    class: logging.FileHandler
-    filename: app.log
     level: DEBUG
-    formatter: default
+    formatter: simple
 
 root:
   level: DEBUG
-  handlers: [console, file]
+  handlers: [console]
