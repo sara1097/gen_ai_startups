@@ -22,7 +22,7 @@ def route_reasoning(
     data: Dict, 
     domain: list, 
     isNewConversation: bool,
-    conversationId: str,
+    conversationId: int,
     clientMessageId: str
 ) -> Dict:
    
