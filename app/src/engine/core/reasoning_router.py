@@ -118,7 +118,7 @@ def route_reasoning(
             "raw_text": "No idea data generated"
         }
 
-    structured_data = structured_data.add('inspired_by', inspired_by)
+    structured_data['inspired_by'] = inspired_by
     
     # Step 5: Build unified prompt (to generate the response's content)
     logger.info(f"Building unified prompt...")
