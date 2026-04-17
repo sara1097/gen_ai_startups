@@ -117,6 +117,8 @@ def route_reasoning(
         structured_data = {
             "raw_text": "No idea data generated"
         }
+
+    structured_data = structured_data.add('inspired_by', inspired_by)
     
     # Step 5: Build unified prompt (to generate the response's content)
     logger.info(f"Building unified prompt...")
@@ -153,8 +155,7 @@ def route_reasoning(
             role='ai',
             is_idea_saved=False,
             is_full_idea=is_idea,
-            data=structured_data,
-            inspired_by= inspired_by
+            data=structured_data
         ).dict()
     
     else:
@@ -164,6 +165,5 @@ def route_reasoning(
             role='ai',
             is_idea_saved=False,
             is_full_idea=is_idea,
-            data=structured_data,
-            inspired_by= inspired_by
+            data=structured_data
         ).dict()
