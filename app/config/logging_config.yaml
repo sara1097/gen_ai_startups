@@ -14,7 +14,7 @@ handlers:
   file:
     class: logging.FileHandler
     filename: app.log
-    level: WARNING
+    level: DEBUG
     formatter: default
 
 root:

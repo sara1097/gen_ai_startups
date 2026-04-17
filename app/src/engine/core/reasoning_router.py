@@ -3,7 +3,8 @@ from typing import Dict, List
 import pandas as pd
 from app.src.chat_schemas.response_schema import ChatResponse, IntentSchema
 from app.src.engine.core.intent_classification import (
-    classify_intent, 
+    classify_intent,
+    detect_language, 
     extract_problem_and_requirements
 )
 from app.src.engine.rag.retriver import retrieve_topk
@@ -26,6 +27,8 @@ def route_reasoning(
    
     
     logger.debug(f"\nProcessing user input: {user_input}")
+    lang = detect_language(user_input)
+    logger.debug(f"Detected language: {lang}")
     
     structured_data = None
     new_data = None
@@ -123,7 +126,8 @@ def route_reasoning(
         extracted_data=extracted,
         context=context,
         primary_intent=primary_intent,
-        idea_data=structured_data
+        idea_data=structured_data,
+        lang = lang
     )
     
     # Step 6: Call LLM with the final prompt to generate response

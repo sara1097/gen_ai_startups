@@ -1,7 +1,8 @@
 from typing import List, Dict
 
 # INTENTS DETECTION TEMPLATE
-INTENTS_DETECTION_TEMPLATE = """You are an intent classification expert.
+INTENTS_DETECTION_TEMPLATE = """You are a multilingual intent classifier. Detect intents regardless of the language used.
+Always return all text fields in English only.
 
 User input: "{user_message}"
 
@@ -150,7 +151,8 @@ def build_unified_prompt(
     extracted_data: Dict,
     context: str = None,
     primary_intent: str = None,
-    idea_data: Dict = None
+    idea_data: Dict = None,
+    lang: str = "English"
 ) -> str:
 
     if not primary_intent:
@@ -194,12 +196,22 @@ Important rules:
 The user is asking for a startup idea solution.
 
 Your task:
-- Describe the startup solution in a clear, compelling way
-- Use the idea data provided above as your reference
-- Return ONLY the description of the solution (not the full JSON)
+- Open with 1-2 sentences that reflect the user's pain point directly
+- Then introduce the startup idea naturally (not as a title/header)
+- Use bullet points ONLY for key features (max 4 bullets)
+- Everything else must be flowing paragraphs
+- Do NOT use repetitive prefixes like "هذه هي..." or "Here are the..."
+- Do NOT start with self-introductions like "I am here to..." or "أنا هنا لـ..."
+- The tone should feel like a founder pitching, not a report
+- End with one strong closing sentence about the opportunity
 
-Format your response as clear paragraphs or bullet points.
-Make it practical and actionable for the Egypt/MENA market.
+CRITICAL:
+- The JSON data is already saved separately for the backend
+- Your ONLY job here is to write a compelling narrative for the user
+- Do NOT reformat or list the JSON fields mechanically
+- Use the data as inspiration to tell a story, not as a template to copy
+- Respond in the SAME language the user wrote in (Arabic or English)
+- Keep technical terms in English regardless of the response language (MVP, B2B, real-time tracking, etc.)
 """
 
 
@@ -330,6 +342,20 @@ IMPORTANT INSTRUCTIONS:
 - Do NOT return the raw JSON data
 - Format response as readable text or bullet points
 - Make it engaging and professional
+- Do NOT start with "نعم" or any filler opener
+- Do NOT repeat or summarize at the end
+- Start directly with the idea or the problem hook
+"""
+    prompt += f"""
+
+LANGUAGE INSTRUCTIONS:
+- The user wrote in {lang}.
+- You MUST respond in {lang}.
+- Keep all technical and startup terms in English (e.g., MVP, B2B, SaaS, revenue streams, market fit).
+- All explanations, descriptions, and narrative text must be in {lang}.
+- Keep technical ENGLISH terms as-is without adding Arabic suffixes
+- BAD: "transparentة", "efficientة"
+- GOOD: "شفافة (transparent)", "فعّالة (efficient)"
 """
 
     return prompt

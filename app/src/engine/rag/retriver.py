@@ -82,6 +82,7 @@ def retrieve_topk(
 ):
     logger.info(f"Getting The top 5 Startups")
     problem_en = translate_to_english(problem_text)
+    logger.debug(f"Translated: {problem_en}")
     ce_query   = f"{sector}: {problem_en}" if sector else problem_en
 
     dense_vec  = embedding_provider.encode(problem_en)

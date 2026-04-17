@@ -41,14 +41,36 @@ def extract_problem_and_requirements(user_input: str) -> Dict:
 
     logger.info("Extracting problem and requirements") 
 
-    extraction_prompt = f"""Extract information from this input. Return ONLY valid JSON.
+    extraction_prompt = f"""You are a multilingual assistant. The user may write in Arabic or English.
 
 User input: "{user_input}"
 
-Return this exact JSON format (no other text):
-{{"core_problem": "", "requirements": [], "references_previous": false, "questions": [], "constraints": []}}
+Return ONLY valid JSON with no other text:
+{{
+  "core_problem": "",
+  "requirements": [],
+  "references_previous": false,
+  "questions": [],
+  "constraints": []
+}}
 
-Fill the fields based on the user input. If a field is empty, use empty string or empty list."""
+Instructions:
+- Always write all extracted text in English
+- "core_problem": Full descriptive sentence preserving ALL context from user input (domain + problem + details)
+- Never reduce the problem to a single word
+- Preserve domain-specific details (clinic, school, transport, etc.)
+
+Example:
+Input: "عندي زحمة رهيبة في العيادات ومواعيد مش منظمة وناس بتتأخر"
+Output:
+{{
+  "core_problem": "clinics suffer from severe overcrowding, disorganized appointment scheduling, and frequent patient delays",
+  "requirements": ["organized scheduling system", "reduce waiting time"],
+  "references_previous": false,
+  "questions": [],
+  "constraints": ["patient delays", "crowded waiting rooms"]
+}}
+"""
     
     try:
         response = llm_provider.generate([
@@ -158,3 +180,7 @@ def get_default_extraction(user_input: str) -> Dict:
         "questions": [user_input],
         "constraints": []
     }
+
+def detect_language(text: str) -> str:
+    arabic_chars = sum(1 for c in text if '\u0600' <= c <= '\u06FF')
+    return "Arabic" if arabic_chars > len(text) * 0.2 else "English"
