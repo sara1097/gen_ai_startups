@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from app.src.chat_schemas.response_schema import ChatRequest, ChatResponse
 from app.src.engine.core.reasoning_router import route_reasoning
 
-# تحميل env
+
 load_dotenv(".env")
 
 app = FastAPI(title="Startup AI Service")
@@ -19,7 +19,6 @@ logger = logging.getLogger(__name__)
 @app.post("/chat", response_model=ChatResponse)
 async def chat_endpoint(request: Request):
     
-    # ✅ 1) قراءة request بشكل آمن
     try:
         body = await request.json()
     except Exception:
@@ -28,12 +27,10 @@ async def chat_endpoint(request: Request):
         logger.error(f"Raw body: {raw_body.decode(errors='ignore')}")
         raise
 
-    # ✅ 2) Logging للـ request
     logger.info("New request received")
-    logger.debug(f"Body: {str(body)[:500]}")  # قصّ عشان ميكسرش اللوج
+    logger.debug(f"Body: {str(body)[:500]}")
     logger.debug(f"Headers: {dict(request.headers)}")
 
-    # ✅ 3) Validation
     try:
         parsed_request = ChatRequest(**body)
     except Exception as e:
@@ -42,7 +39,6 @@ async def chat_endpoint(request: Request):
         logger.error(f"Bad body: {body}")
         raise
 
-    # ✅ 4) تشغيل RAG
     try:
         logger.info("Starting reasoning...")
 
