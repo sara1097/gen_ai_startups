@@ -21,7 +21,7 @@ def chat_endpoint(request: ChatRequest):
         data=request.data,
         isNewConversation=request.isNewConversation,
         conversationId=request.conversationId,
-        domain=request.domain
+        domain=request.sectors
     )
 
     return result
