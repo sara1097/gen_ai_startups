@@ -1,7 +1,6 @@
 import logging
 import logging.config
 import yaml
-from pathlib import Path
 
 def setup_logging():
     config_path = "app/config/logging_config.yaml"
