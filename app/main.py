@@ -16,7 +16,7 @@ app = FastAPI(title="Startup AI Service")
 
 @app.post("/chat", response_model=ChatResponse)
 def chat_endpoint(request: ChatRequest):
-    logger.debug(f"Request content: {request.content}")
+    logger.debug(f"Request content: {request}")
     result = route_reasoning(
         user_input=request.content,
         data=request.data,
