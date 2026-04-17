@@ -13,8 +13,6 @@ class ChatResponse(BaseModel):
     is_idea_saved: bool = False
     is_full_idea: bool
     data: Optional[Dict] = None
-    inspired_by: Optional[List[str]] = None
-
 
 class ChatRequest(BaseModel):
     content: str
