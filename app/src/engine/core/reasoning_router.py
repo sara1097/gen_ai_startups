@@ -152,7 +152,7 @@ def route_reasoning(
         return ChatResponse(
             content=content,
             conversationId=conversationId,
-            conversation_title=conversation_title,
+            #conversation_title=conversation_title,
             clientMessageId = clientMessageId,
             role='ai',
             is_idea_saved=False,
