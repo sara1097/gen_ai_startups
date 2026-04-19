@@ -75,20 +75,20 @@ qdrant_client= QdrantClient(url=os.getenv("QDRANT_URL"), api_key=os.getenv("QDRA
 def retrieve_topk(
     problem_text: str,
     k: int = 5,
-    sector: str | None = None,
+    sectors: list[str] | None = None,
     topN: int = 150,
     debug: bool = True
 ):
     logger.info(f"Getting The top 5 Startups")
     problem_en = translate_to_english(problem_text)
     logger.debug(f"Translated: {problem_en}")
-    ce_query   = f"{sector}: {problem_en}" if sector else problem_en
+    ce_query   = f"{sectors[0]}: {problem_en}" if sectors else problem_en
 
     dense_vec  = embedding_provider.encode(problem_en)
     sparse_vec = sparse_provider.encode(problem_en)
 
     # Soft sector filter (SHOULD = boost, not hard exclusion)
-    startup_sectors = get_startup_sectors_for_problem(sector) if sector else []
+    startup_sectors = get_startup_sectors_for_problem(sectors[0]) if sectors else []
     soft_filter = None
     if startup_sectors:
         soft_filter = models.Filter(
@@ -98,10 +98,10 @@ def retrieve_topk(
             )]
         )
         if debug:
-            logger.debug(f"'{sector}' → {len(startup_sectors)} startup sectors boosted")
+            logger.debug(f"'{sectors}' → {len(startup_sectors)} startup sectors boosted")
     else:
         if debug:
-            logger.warning(f"No mapping for '{sector}' — searching without sector boost")
+            logger.warning(f"No mapping for '{sectors}' — searching without sector boost")
 
     def run_query(use_filter):
         return qdrant_client.query_points(

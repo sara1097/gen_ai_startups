@@ -93,7 +93,7 @@ link: {pl.get("link", "") or pl.get("site", "")}"""
         # Retrieve similar problems/solutions
         points = retrieve_topk(
             problem_text=extracted.get('core_problem', 'Problem not clearly specified'),
-            sector=domain[0]
+            sectors=domain
         )
         
         context = make_context_cards(points)
