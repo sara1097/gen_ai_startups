@@ -59,7 +59,7 @@ async def chat_endpoint(
             isNewConversation=request.isNewConversation,
             clientMessageId=request.clientMessageId,
             conversationId=request.conversationId,
-            domain=[request.domain or "general"]
+            domain=request.domain or []
         )
         
         logger.info("Response generated successfully")
