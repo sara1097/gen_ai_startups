@@ -238,7 +238,7 @@ CRITICAL:
 - Do NOT reformat or list the JSON fields mechanically.
 - Respond in the SAME language the user wrote in (Arabic or English).
 - Keep technical terms in English regardless of the response language (MVP, B2B, real-time tracking, etc.).
-- End the response with an engaging sentence that encourages the user to ask for more details or continue the conversation.
+- IMPORTANT: Always end the entire response with an engaging question that encourages the user to ask for more details or continue the conversation. This must come after all sections.
 """
 
 
