@@ -120,8 +120,7 @@ link: {pl.get("link", "") or pl.get("site", "")}"""
             # Generate alternative idea for same problem
             logger.info(f"Generating alternative startup idea...")
             problem = data.get(
-                'problem_description', 
-                extracted.get('core_problem', 'Problem not clearly specified')
+                'problem_description'
             )
             
             new_data = llm_provider.generate([

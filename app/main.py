@@ -51,6 +51,7 @@ async def chat_endpoint(
         logger.debug(f"Conversation ID: {request.conversationId}")
         logger.debug(f"Domain: {request.domain}")
         logger.debug(f"Is New Conversation: {request.isNewConversation}")
+        logger.debug(f"data: {request.data}")
         
         logger.info("Starting reasoning engine...")
         result = route_reasoning(
