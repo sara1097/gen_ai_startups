@@ -34,7 +34,7 @@ class ChatRequest(BaseModel):
         default=False,
         description="Whether this starts a new conversation"
     )
-    domain: Optional[str] = Field(
+    domain: list[str] = Field(
         default="general",
         description="Business domain/sector",
         examples=["education", "healthcare", "technology", "transportation", "finance"]
