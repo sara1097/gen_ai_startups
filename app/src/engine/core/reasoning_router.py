@@ -26,27 +26,13 @@ def route_reasoning(
     conversationId: int,
     clientMessageId: str
 ) -> Dict:
-    """
-    Main reasoning router - orchestrates the entire flow
-    
-    Args:
-        user_input: The user's message or problem description
-        data: Previous idea data (for follow-up requests)
-        domain: List of business domains/sectors
-        isNewConversation: Whether this is a new conversation
-        conversationId: Unique conversation ID
-        clientMessageId: Unique message ID from client
-    
-    Returns:
-        Dictionary containing the response and idea data
-    """
     
     try:
-        logger.debug(f"\n📝 Processing user input: {user_input}")
+        logger.debug(f"/nProcessing user input: {user_input}")
         
         # Step 1: Detect language
         lang = detect_language(user_input)
-        logger.debug(f"🌍 Detected language: {lang}")
+        logger.debug(f"Detected language: {lang}")
         
         # Initialize variables
         structured_data = None
@@ -55,12 +41,12 @@ def route_reasoning(
         context = ""
         
         # Step 2: Detect intents
-        logger.info(f"🔍 Detecting intents...")
+        logger.info(f"🔍Detecting intents...")
         intents_response = classify_intent(user_input)
-        logger.debug(f"✅ Detected intents: {intents_response['detected_intents']}")
+        logger.debug(f"Detected intents: {intents_response['detected_intents']}")
         
         # Step 3: Extract problem and requirements
-        logger.info(f"📋 Extracting problem and requirements...")
+        logger.info(f"Extracting problem and requirements...")
         if intents_response["primary_intent"] == "random_solution":
             # Filter problems by domain
             try:
@@ -70,26 +56,26 @@ def route_reasoning(
                 ].sample(n=1)['problem_description'].values[0]
                 
                 extracted = extract_problem_and_requirements(random_domain_based_problem)
-                logger.info(f"🎲 Random domain-based problem selected: {random_domain_based_problem}")
+                logger.info(f"Random domain-based problem selected: {random_domain_based_problem}")
                 
             except Exception as e:
-                logger.warning(f"⚠️ Error reading problems file: {e}")
+                logger.warning(f"Error reading problems file: {e}")
                 extracted = extract_problem_and_requirements(user_input)
         else:
             extracted = extract_problem_and_requirements(user_input)
         
-        logger.debug(f"✅ Extracted data: {extracted}")
+        logger.debug(f"Extracted data: {extracted}")
         
         # Step 4: Get context from retriever layer (RAG)
-        logger.info(f"🔎 Retrieving context from knowledge base...")
+        logger.info(f"Retrieving context from knowledge base...")
         
         def make_context_cards(points):
             """Format retrieved points into readable context cards"""
-            logger.info("📇 Making context cards")
+            logger.info("Making context cards")
             cards = []
             
             if not points:
-                logger.warning("⚠️ No context cards retrieved")
+                logger.warning("No context cards retrieved")
                 return ""
             
             for i, p in enumerate(points, 1):
@@ -107,32 +93,32 @@ link: {pl.get("link", "") or pl.get("site", "")}"""
         # Retrieve similar problems/solutions
         points = retrieve_topk(
             problem_text=extracted.get('core_problem', 'Problem not clearly specified'),
-            sector=domain
+            sector=domain[0]
         )
         
         context = make_context_cards(points)
         inspired_by = [point.payload.get("name", "") for point in points] if points else None
         
-        logger.info(f"✅ Inspired by: {inspired_by}")
-        logger.debug(f"📚 Context:\n{context[:200]}...")
+        logger.info(f"Inspired by: {inspired_by}")
+        logger.debug(f"Context:\n{context[:200]}...")
         
         # Step 5: Generate or retrieve idea data
-        logger.info(f"💡 Determining idea generation strategy...")
+        logger.info(f"Determining idea generation strategy...")
         primary_intent = intents_response['primary_intent']
         
         if primary_intent in ["problem_solving", "random_solution"]:
             # Generate new idea
-            logger.info(f"🔄 Generating new startup idea...")
+            logger.info(f"Generating new startup idea...")
             core_problem = extracted.get('core_problem', 'Problem not clearly specified')
             
             new_data = llm_provider.generate([
                 {"role": "user", "content": FULL_IDEA_TEMPLATE.format(core_problem=core_problem)}
             ])
-            logger.debug(f"✅ New idea generated")
+            logger.debug(f"New idea generated")
         
         elif primary_intent == "alternative_idea":
             # Generate alternative idea for same problem
-            logger.info(f"🔄 Generating alternative startup idea...")
+            logger.info(f"Generating alternative startup idea...")
             problem = data.get(
                 'problem_description', 
                 extracted.get('core_problem', 'Problem not clearly specified')
@@ -141,34 +127,37 @@ link: {pl.get("link", "") or pl.get("site", "")}"""
             new_data = llm_provider.generate([
                 {"role": "user", "content": FULL_IDEA_TEMPLATE.format(core_problem=problem)}
             ])
-            logger.debug(f"✅ Alternative idea generated")
+            logger.debug(f"Alternative idea generated")
         
         else:
             # Use existing data (follow_up, details, feasibility, etc.)
-            logger.info(f"📚 Using existing idea data...")
+            logger.info(f"Using existing idea data...")
             new_data = data
         
         # Step 6: Parse structured data
-        logger.info(f"🔨 Parsing structured data...")
+        logger.info(f"Parsing structured data...")
         if new_data:
             try:
                 structured_data = json.loads(new_data) if isinstance(new_data, str) else new_data
-                logger.info(f"✅ Structured data parsed successfully")
+                logger.info(f"Structured data parsed successfully")
             
             except (json.JSONDecodeError, TypeError) as e:
-                logger.warning(f"⚠️ Failed to parse structured data: {e}")
+                logger.warning(f"Failed to parse structured data: {e}")
                 structured_data = {
                     "raw_text": str(new_data)[:500],
                     "parse_error": str(e)
                 }
         else:
-            logger.warning(f"⚠️ No idea data generated")
+            logger.warning(f"No idea data generated")
             structured_data = {
                 "raw_text": "No idea data generated"
             }
         
         # Add inspiration sources to structured data
-        structured_data["inspired_by"] = inspired_by
+        if inspired_by is not None:
+            structured_data["inspired_by"] = json.dumps(inspired_by) if isinstance(inspired_by, list) else str(inspired_by)
+        else:
+            structured_data["inspired_by"] = "None"
         
         # Step 7: Build unified prompt
         logger.info(f"🔨 Building unified prompt...")
@@ -181,22 +170,22 @@ link: {pl.get("link", "") or pl.get("site", "")}"""
             idea_data=structured_data,
             lang=lang
         )
-        logger.debug(f"✅ Unified prompt built")
+        logger.debug(f"Unified prompt built")
         
         # Step 8: Generate response content
-        logger.info(f"⏳ Generating response content...")
+        logger.info(f"Generating response content...")
         
         content = llm_provider.generate([
             {"role": "user", "content": final_prompt}
         ])
         
-        logger.info(f"✅ Response content generated")
+        logger.info(f"Response content generated")
         
         # Step 9: Determine response type
         is_idea = primary_intent in ["problem_solving", "random_solution", "alternative_idea"]
         
         # Step 10: Build response object
-        logger.info(f"📦 Building response object...")
+        logger.info(f"Building response object...")
         
         response_data = {
             "content": content,
@@ -212,26 +201,26 @@ link: {pl.get("link", "") or pl.get("site", "")}"""
         if isNewConversation:
             conversation_title = extracted.get('core_problem', 'New Conversation')
             response_data["conversation_title"] = conversation_title
-            logger.info(f"📝 New conversation titled: {conversation_title}")
+            logger.info(f"New conversation titled: {conversation_title}")
         
         # Validate and return response
-        logger.info(f"✅ Validating response...")
+        logger.info(f"Validating response...")
         response = ChatResponse(**response_data)
         
-        logger.info(f"✅ Response ready to send")
+        logger.info(f"Response ready to send")
         logger.debug(f"Response summary - Intent: {primary_intent}, Is Idea: {is_idea}")
         
         return response.dict()
     
     except ValueError as e:
-        logger.error(f"❌ Validation error: {e}")
+        logger.error(f"Validation error: {e}")
         raise
     
     except KeyError as e:
-        logger.error(f"❌ Missing required field: {e}")
+        logger.error(f"Missing required field: {e}")
         raise
     
     except Exception as e:
-        logger.error(f"❌ Unexpected error in route_reasoning: {type(e).__name__}")
+        logger.error(f"Unexpected error in route_reasoning: {type(e).__name__}")
         logger.exception(e)
         raise

@@ -2,7 +2,6 @@ from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 
 class IntentSchema(BaseModel):
-    """Schema for detected intents"""
     primary_intent: str = Field(..., description="The main intent detected")
     secondary_intents: List[str] = Field(
         default_factory=list,
@@ -11,7 +10,6 @@ class IntentSchema(BaseModel):
 
 
 class ChatRequest(BaseModel):
-    """Schema for incoming chat requests"""
     content: str = Field(
         ..., 
         description="The user's message or problem description",
@@ -81,7 +79,6 @@ class ChatRequest(BaseModel):
 
 
 class ChatResponse(BaseModel):
-    """Schema for outgoing chat responses"""
     content: str = Field(
         ...,
         description="The AI response message"

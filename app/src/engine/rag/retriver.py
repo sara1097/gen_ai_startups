@@ -1,4 +1,3 @@
-
 import os
 
 from qdrant_client import QdrantClient, models
@@ -106,7 +105,7 @@ def retrieve_topk(
 
     def run_query(use_filter):
         return qdrant_client.query_points(
-            collection_name= os.getenv("COLLECTION"),
+            collection_name= os.getenv("COLLECTION") or "startups",
             prefetch=[
                 Prefetch(query=dense_vec,  using="dense",  limit=topN, filter=use_filter),
                 Prefetch(
@@ -136,6 +135,9 @@ def retrieve_topk(
         # if is_boilerplate(p.payload):
         #     skipped += 1
         #     continue
+        if p.payload is None:
+            skipped += 1
+            continue
         name = (p.payload.get("name") or "").strip().lower()
         if name not in seen:
             seen.add(name)

@@ -39,92 +39,55 @@ async def chat_endpoint(
             "conversationId": 123,
             "clientMessageId": "msg_001",
             "isNewConversation": True,
-            "domain": "education",
+            "domain": ["education"],
             "data": None
         }
     )
 ):
-    """
-    Process user input and generate startup ideas or responses.
-    
-    **Request Parameters:**
-    - **content**: The user's message, problem description, or question
-    - **conversationId**: Unique integer identifier for this conversation
-    - **clientMessageId**: Unique string identifier for this specific message
-    - **isNewConversation**: Boolean flag indicating if this is a new conversation
-    - **domain**: Business domain/sector (education, healthcare, technology, etc.)
-    - **data**: Previous idea data for follow-up or alternative requests (optional)
-    
-    **Response Fields:**
-    - **content**: The AI-generated response message
-    - **conversationId**: Echo of the conversation ID
-    - **clientMessageId**: Echo of the message ID for tracking
-    - **conversation_title**: Generated title for new conversations
-    - **role**: Always "ai" for AI responses
-    - **is_idea_saved**: Whether the idea was saved (for frontend state)
-    - **is_full_idea**: Boolean indicating if response contains a complete startup idea
-    - **data**: Full structured idea data (when is_full_idea=true)
-    - **inspired_by**: List of inspiration sources
-    
-    **Example Intents:**
-    - Problem solving: "I want to solve expensive education in Egypt"
-    - Random solution: "Give me a startup idea"
-    - Follow-up: "Tell me more about the business model"
-    - Alternative: "Give me a different approach"
-    - Details: "Explain the implementation steps"
-    - Feasibility: "Is this feasible?"
-    - Novelty: "Is this innovative?"
-    - General chat: "What's trending in startups?"
-    """
     
     try:
-        # Log incoming request
-        logger.info(f"📨 New chat request received")
+        logger.info(f"New chat request received")
         logger.debug(f"Content: {request.content[:100]}...")
         logger.debug(f"Conversation ID: {request.conversationId}")
         logger.debug(f"Domain: {request.domain}")
         logger.debug(f"Is New Conversation: {request.isNewConversation}")
         
-        # Call reasoning router
-        logger.info("🔄 Starting reasoning engine...")
+        logger.info("Starting reasoning engine...")
         result = route_reasoning(
             user_input=request.content,
             data=request.data or {},
             isNewConversation=request.isNewConversation,
             clientMessageId=request.clientMessageId,
             conversationId=request.conversationId,
-            domain=request.domain or "general"
+            domain=[request.domain or "general"]
         )
         
-        # Validate response structure
-        logger.info("✅ Response generated successfully")
+        logger.info("Response generated successfully")
         logger.debug(f"Is Full Idea: {result.get('is_full_idea')}")
         
-        # Ensure clientMessageId is in response
         result['clientMessageId'] = request.clientMessageId
         
-        # Create validated response
         response = ChatResponse(**result)
         
-        logger.info(f"✅ Response sent to client (Conversation: {request.conversationId})")
+        logger.info(f"Response sent to client (Conversation: {request.conversationId})")
         return response
     
     except ValueError as e:
-        logger.error(f"❌ Validation error: {e}")
+        logger.error(f"Validation error: {e}")
         raise HTTPException(
             status_code=400,
             detail=f"Validation error: {str(e)}"
         )
     
     except KeyError as e:
-        logger.error(f"❌ Missing required field: {e}")
+        logger.error(f"Missing required field: {e}")
         raise HTTPException(
             status_code=400,
             detail=f"Missing required field: {str(e)}"
         )
     
     except Exception as e:
-        logger.error(f"❌ Unexpected error in chat endpoint: {type(e).__name__}")
+        logger.error(f"Unexpected error in chat endpoint: {type(e).__name__}")
         logger.exception(e)
         raise HTTPException(
             status_code=500,
@@ -138,12 +101,7 @@ async def chat_endpoint(
     summary="Health check endpoint"
 )
 async def health_check():
-    """
-    Check if the API is running and healthy.
-    
-    **Returns:**
-    - **status**: "healthy" if the API is running
-    """
+
     logger.debug("Health check requested")
     return {
         "status": "healthy",
@@ -157,15 +115,7 @@ async def health_check():
     summary="API Information"
 )
 async def root():
-    """
-    Get API information and documentation links.
-    
-    **Returns:**
-    - **name**: Service name
-    - **version**: API version
-    - **docs**: Link to interactive API documentation
-    - **openapi**: Link to OpenAPI schema
-    """
+
     return {
         "name": "Startup Generator AI Service",
         "version": "1.0.0",
@@ -185,8 +135,6 @@ async def swagger_ui():
     """Redirect to Swagger UI documentation"""
     return {"redirect": "/docs"}
 
-
-# Error handlers
 @app.exception_handler(HTTPException)
 async def http_exception_handler(request, exc):
     """Custom HTTP exception handler"""
@@ -200,7 +148,6 @@ async def http_exception_handler(request, exc):
 
 @app.exception_handler(Exception)
 async def general_exception_handler(request, exc):
-    """Custom general exception handler"""
     logger.error(f"Unhandled Exception: {type(exc).__name__} - {str(exc)}")
     return {
         "error": True,
@@ -212,7 +159,7 @@ async def general_exception_handler(request, exc):
 if __name__ == "__main__":
     import uvicorn
     
-    logger.info("🚀 Starting Startup Generator AI Service...")
+    logger.info("Starting Startup Generator AI Service...")
     
     uvicorn.run(
         app,
