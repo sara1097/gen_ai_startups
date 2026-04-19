@@ -149,9 +149,9 @@ from typing import List, Dict
 def build_unified_prompt(
     detected_intents: List[Dict],
     extracted_data: Dict,
-    context: str = None,
-    primary_intent: str = None,
-    idea_data: Dict = None,
+    context: str = '',
+    primary_intent: str = "problem_solving",
+    idea_data: Dict = {},
     lang: str = "English"
 ) -> str:
 
@@ -196,22 +196,49 @@ Important rules:
 The user is asking for a startup idea solution.
 
 Your task:
-- Open with 1-2 sentences that reflect the user's pain point directly
-- Then introduce the startup idea naturally (not as a title/header)
-- Use bullet points ONLY for key features (max 4 bullets)
-- Everything else must be flowing paragraphs
-- Do NOT use repetitive prefixes like "هذه هي..." or "Here are the..."
-- Do NOT start with self-introductions like "I am here to..." or "أنا هنا لـ..."
-- The tone should feel like a founder pitching, not a report
-- End with one strong closing sentence about the opportunity
+- Provide a structured response with clear sections and headlines, similar to ChatGPT's organized output.
+- Keep each section concise and high-level, avoiding deep technical details.
+- Generate unique and accurate solution details based on the provided idea data.
+- Structure the response exactly as follows:
+
+## Problem Summary
+Brief summary of the core problem and why it matters.
+
+## Solution Overview
+High-level description of the proposed startup solution.
+
+## Target Audience
+Who the solution is designed for (demographics, needs).
+
+## Key Features
+- Feature 1 (brief)
+- Feature 2 (brief)
+- Feature 3 (brief)
+- Feature 4 (brief, max 4 items)
+
+## Business Model
+Summary of revenue streams and pricing approach.
+
+## Market Opportunity
+Brief analysis of market size and potential.
+
+## Feasibility Assessment
+High-level assessment of technical and market feasibility.
+
+## Impact
+Potential economic and social impact.
+
+## Next Steps
+Immediate actions to get started (e.g., MVP development).
 
 CRITICAL:
-- The JSON data is already saved separately for the backend
-- Your ONLY job here is to write a compelling narrative for the user
-- Do NOT reformat or list the JSON fields mechanically
-- Use the data as inspiration to tell a story, not as a template to copy
-- Respond in the SAME language the user wrote in (Arabic or English)
-- Keep technical terms in English regardless of the response language (MVP, B2B, real-time tracking, etc.)
+- The JSON data is already saved separately for the backend.
+- Your ONLY job here is to write a structured, compelling response for the user.
+- Use the idea data as inspiration to create unique, accurate details.
+- Do NOT reformat or list the JSON fields mechanically.
+- Respond in the SAME language the user wrote in (Arabic or English).
+- Keep technical terms in English regardless of the response language (MVP, B2B, real-time tracking, etc.).
+- End the response with an engaging sentence that encourages the user to ask for more details or continue the conversation.
 """
 
 
