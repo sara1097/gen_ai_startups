@@ -28,11 +28,7 @@ CRITICAL DISTINCTIONS:
   * Greetings: "Hi", "Hello", "السلام عليكم", "مرحبا"
   * Questions about the bot: "what can you do", "how can you help", "what are you", "بتعمل ايه"
   * Opinion questions: "what do you think about X", "ايه رايك في"
-  * Questions about capability EVEN IF phrased indirectly → general_chat
-        Examples:
-        "can you generate ideas?"
-        "you generate ideas for any problem?"
-        "do you help with startups?"
+  * ANY question about what the bot can do (even indirectly) → general_chat
   * Casual conversation: "how are you", "كيف حالك"
   * Market curiosity with no problem: "How is the market?", "What's trending?"
 
@@ -162,7 +158,7 @@ def build_new_idea_prompt(
     lang: str = "English"
 ) -> str:
 
-    prompt = """
+    prompt = f"""
 You are an expert in entrepreneurship and startup innovation focused on the MENA region.
 
 Always answer clearly and practically.
@@ -172,7 +168,7 @@ Base your response on the idea data provided.
 
 STARTUP IDEA DATA (REFERENCE):
 
-{idea_json}
+{json.dumps(idea_data, ensure_ascii=False, indent=2)}
 
 Important rules:
 - Use this data as your source of truth when answering.
@@ -187,7 +183,6 @@ The user is asking for a startup idea solution.
 Your task:
 - Provide a structured response with clear sections and headlines, similar to ChatGPT's organized output.
 - Keep each section concise and high-level, avoiding deep technical details.
-- Generate unique and accurate solution details based on the provided idea data.
 - Structure the response exactly as follows:
 
 ## Problem Summary
@@ -260,7 +255,7 @@ def build_follow_up_prompt(
                 lang : str = "English"
 
 ):
-    prompt = """
+    prompt = f"""
 You are an expert in entrepreneurship and startup innovation focused on the MENA region.
 
 Always answer clearly and practically.
@@ -270,7 +265,7 @@ Base your response on the idea data provided.
 
 STARTUP IDEA DATA (REFERENCE):
 
-{idea_json}
+{json.dumps(idea_data, ensure_ascii=False, indent=2)}
 
 Important rules:
 - Use this data as your source of truth when answering.
