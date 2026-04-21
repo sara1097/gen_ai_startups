@@ -29,7 +29,9 @@ RULE_PATTERNS = {
         r"\b(more|tell me|expand|explain|أكثر|وضح|تفاصيل|كمّل)\b"
     ],
     "general_chat": [
-        r"\b(hi|hello|hey|مرحبا|السلام|كيف|what can you|ايه اللي|بتعمل)\b"
+        r"\b(hi|hello|hey|مرحبا|السلام|كيف|what can you|ايه اللي|بتعمل)\b",
+
+        r"\b(can i tell you|can i share|is it okay|هقدر|ممكن أقولك|عايز أقولك)\b",
     ]
 }
 

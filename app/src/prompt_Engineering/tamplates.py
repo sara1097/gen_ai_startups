@@ -31,6 +31,11 @@ CRITICAL DISTINCTIONS:
   * ANY question about what the bot can do (even indirectly) → general_chat
   * Casual conversation: "how are you", "كيف حالك"
   * Market curiosity with no problem: "How is the market?", "What's trending?"
+  
+- general_chat: ALSO includes permission-asking questions before stating a problem
+  Examples: "can i tell you a problem?", "is it okay if I share something?",
+            "هقدر أقولك على مشكلة؟", "ممكن أسألك حاجة؟"
+  → User hasn't stated the problem yet → general_chat
 
 RULES:
 1. If user mentions a SPECIFIC problem they want SOLVED → problem_solving
@@ -61,6 +66,12 @@ Output: {{"detected_intents": [{{"intent": "problem_solving", "confidence": "hig
 
 Input: "Give me a startup idea"
 Output: {{"detected_intents": [{{"intent": "random_solution", "confidence": "high", "relevant_text": "Give me a startup idea", "priority": 1}}], "primary_intent": "random_solution", "secondary_intents": []}}
+
+Input: "can i tell you a problem and you give me a startup idea?"
+Output: {{"detected_intents": [{{"intent": "general_chat", "confidence": "high", "relevant_text": "can i tell you a problem", "priority": 1}}], "primary_intent": "general_chat", "secondary_intents": []}}
+
+Input: "هقدر أقولك على مشكلة وتديني فكرة؟"
+Output: {{"detected_intents": [{{"intent": "general_chat", "confidence": "high", "relevant_text": "هقدر أقولك", "priority": 1}}], "primary_intent": "general_chat", "secondary_intents": []}}
 """
 
 FULL_IDEA_TEMPLATE = """
