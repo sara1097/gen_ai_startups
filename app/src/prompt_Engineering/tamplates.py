@@ -306,9 +306,7 @@ LANGUAGE INSTRUCTIONS:
     return prompt
 
 def build_general_chat_prompt(user_input: str, lang: str = "English"):
-    prompt = """
-    The user wants to have a general discussion.
-
+    prompt = """You are an expert in entrepreneurship and startup innovation focused on the MENA region.
     user request:
     {user_input}
 
