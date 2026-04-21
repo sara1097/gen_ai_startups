@@ -8,8 +8,7 @@ from app.src.engine.core.intent_classification import (
     extract_problem_and_requirements
 )
 from app.src.engine.rag.retriver import retrieve_topk
-from app.src.prompt_Engineering.tamplates import FULL_IDEA_TEMPLATE
-from app.src.prompt_Engineering.tamplates import build_unified_prompt
+from app.src.prompt_Engineering.tamplates import FULL_IDEA_TEMPLATE, build_follow_up_prompt, build_general_chat_prompt, build_new_idea_prompt
 from app.src.llm.groq_provider import groq_provider
 import logging
 
@@ -39,9 +38,10 @@ def route_reasoning(
         new_data = None
         inspired_by = None
         context = ""
+        extracted = {}
         
         # Step 2: Detect intents
-        logger.info(f"🔍Detecting intents...")
+        logger.info(f"Detecting intents...")
         intents_response = classify_intent(user_input)
         logger.debug(f"Detected intents: {intents_response['detected_intents']}")
         
@@ -57,14 +57,16 @@ def route_reasoning(
                 
                 extracted = extract_problem_and_requirements(random_domain_based_problem)
                 logger.info(f"Random domain-based problem selected: {random_domain_based_problem}")
+                logger.debug(f"Extracted data: {extracted}")
+
                 
             except Exception as e:
                 logger.warning(f"Error reading problems file: {e}")
                 extracted = extract_problem_and_requirements(user_input)
-        else:
+        elif intents_response["primary_intent"] == "problem_solving":
             extracted = extract_problem_and_requirements(user_input)
-        
-        logger.debug(f"Extracted data: {extracted}")
+            logger.debug(f"Extracted data: {extracted}")
+
         
         # Step 4: Get context from retriever layer (RAG)
         logger.info(f"Retrieving context from knowledge base...")
@@ -91,16 +93,17 @@ link: {pl.get("link", "") or pl.get("site", "")}"""
             return "\n\n".join(cards)
         
         # Retrieve similar problems/solutions
-        points = retrieve_topk(
-            problem_text=extracted.get('core_problem', 'Problem not clearly specified'),
-            sectors=domain
-        )
+        if intents_response["primary_intent"] == "problem_solving" or intents_response["primary_intent"] == "random_solution":
+            points = retrieve_topk(
+                problem_text=extracted.get('core_problem', 'Problem not clearly specified'),
+                sectors=domain
+            )
         
-        context = make_context_cards(points)
-        inspired_by = [point.payload.get("name", "") for point in points] if points else None
-        
-        logger.info(f"Inspired by: {inspired_by}")
-        logger.debug(f"Context:\n{context[:200]}...")
+            context = make_context_cards(points)
+            inspired_by = [point.payload.get("name", "") for point in points] if points else None
+            
+            logger.info(f"Inspired by: {inspired_by}")
+            logger.debug(f"Context:\n{context[:200]}...")
         
         # Step 5: Generate or retrieve idea data
         logger.info(f"Determining idea generation strategy...")
@@ -159,16 +162,28 @@ link: {pl.get("link", "") or pl.get("site", "")}"""
             structured_data["inspired_by"] = "None"
         
         # Step 7: Build unified prompt
-        logger.info(f"🔨 Building unified prompt...")
+        def build_prompt_of_intent(intent):
+            if primary_intent in ["problem_solving", "random_solution", "alternative_idea"]:
+                return build_new_idea_prompt(
+                primary_intent=primary_intent,
+                idea_data=structured_data,
+                lang=lang
+                )
+            elif primary_intent == "follow_up":
+                return build_follow_up_prompt(
+                primary_intent=primary_intent,
+                user_input=user_input,
+                idea_data=data,
+                lang=lang
+                )
+            elif primary_intent == "general_chat":
+                return build_general_chat_prompt(
+                user_input=user_input,
+                lang=lang
+                )
+        logger.info(f"Building unified prompt...")
         
-        final_prompt = build_unified_prompt(
-            detected_intents=intents_response['detected_intents'],
-            extracted_data=extracted,
-            context=context,
-            primary_intent=primary_intent,
-            idea_data=structured_data,
-            lang=lang
-        )
+        final_prompt = build_prompt_of_intent(primary_intent)
         logger.debug(f"Unified prompt built")
         
         # Step 8: Generate response content

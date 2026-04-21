@@ -48,10 +48,7 @@ User input: "{user_input}"
 Return ONLY valid JSON with no other text:
 {{
   "core_problem": "",
-  "requirements": [],
-  "references_previous": false,
-  "questions": [],
-  "constraints": []
+  "requirements": []
 }}
 
 Instructions:
@@ -66,9 +63,6 @@ Output:
 {{
   "core_problem": "clinics suffer from severe overcrowding, disorganized appointment scheduling, and frequent patient delays",
   "requirements": ["organized scheduling system", "reduce waiting time"],
-  "references_previous": false,
-  "questions": [],
-  "constraints": ["patient delays", "crowded waiting rooms"]
 }}
 """
     
@@ -87,10 +81,7 @@ Output:
 
         return {
             "core_problem": parsed.get("core_problem", ""),
-            "requirements": parsed.get("requirements", []),
-            "references_previous": parsed.get("references_previous", False),
-            "questions": parsed.get("questions", []),
-            "constraints": parsed.get("constraints", [])
+            "requirements": parsed.get("requirements", [])
         }
     
     except json.JSONDecodeError as e:
