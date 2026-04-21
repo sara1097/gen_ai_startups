@@ -28,6 +28,11 @@ CRITICAL DISTINCTIONS:
   * Greetings: "Hi", "Hello", "السلام عليكم", "مرحبا"
   * Questions about the bot: "what can you do", "how can you help", "what are you", "بتعمل ايه"
   * Opinion questions: "what do you think about X", "ايه رايك في"
+  * Questions about capability EVEN IF phrased indirectly → general_chat
+        Examples:
+        "can you generate ideas?"
+        "you generate ideas for any problem?"
+        "do you help with startups?"
   * Casual conversation: "how are you", "كيف حالك"
   * Market curiosity with no problem: "How is the market?", "What's trending?"
 
@@ -322,21 +327,30 @@ LANGUAGE INSTRUCTIONS:
     return prompt
 
 def build_general_chat_prompt(user_input: str, lang: str = "English"):
-     prompt = f"""
+    prompt = f"""
 You help users generate startup ideas for the MENA region.
 
 USER MESSAGE:
 {user_input}
 
 Your task:
+
 - If it's a greeting → respond briefly (1 sentence max)
-- Do NOT introduce yourself (no "I'm an AI..." or similar)
-- Keep it casual, short, and engaging
-- Subtly hint at your capability (startup ideas in MENA)
+- If the user asks what you can do → explain briefly (1 sentence max)
+- If the user asks indirectly about your capability → confirm clearly and briefly
+
+Rules:
+- Do NOT introduce yourself
+- Keep it short, casual, and direct
 - Do NOT ask open-ended questions
 - Avoid long explanations
+- Always hint that you can generate startup ideas
+
+Good examples:
+- "can you generate ideas?" → "Yes, I can generate startup ideas for any problem in the MENA market 🚀"
+- "hi" → "Hey! I can help you come up with startup ideas for the MENA market 🚀"
 
 Language:
 - Respond in {lang}
 """
-     return prompt
+    return prompt
