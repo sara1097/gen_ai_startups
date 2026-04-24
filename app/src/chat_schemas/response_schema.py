@@ -1,18 +1,96 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List, Dict, Any
 
-class IntentSchema(BaseModel):
-    primary_intent: str = Field(..., description="The main intent detected")
-    secondary_intents: List[str] = Field(
-        default_factory=list,
-        description="Additional intents detected"
-    )
 
+# ==========================================================
+# INTENT
+# ==========================================================
+
+class IntentDetail(BaseModel):
+    intent: str
+    confidence: str
+    relevant_text: str
+    priority: int
+
+
+class IntentSchema(BaseModel):
+    detected_intents: List[IntentDetail]
+    primary_intent: str = Field(..., description="Main detected intent")
+    secondary_intents: List[str] = Field(default_factory=list)
+
+
+class ExtractedRequirements(BaseModel):
+    core_problem: str
+    requirements: List[str] = []
+    references_previous: bool = False
+    questions: List[str] = []
+    constraints: List[str] = []
+
+
+# ==========================================================
+# IDEA SCHEMA 
+# ==========================================================
+
+class BusinessModelSchema(BaseModel):
+    value_proposition: str
+    revenue_streams: List[str]
+    pricing_model: str
+    customer_acquisition: List[str]
+
+
+class MarketAnalysisSchema(BaseModel):
+    market_size: str
+    competitors: List[str]
+    competitive_advantage: str
+
+
+class FeasibilitySchema(BaseModel):
+    technical_feasibility: str
+    market_feasibility: str
+    risk_factors: List[str]
+
+
+class ImpactSchema(BaseModel):
+    economic_impact: str
+    social_impact: str
+
+
+class MvpPlanSchema(BaseModel):
+    mvp_features: List[str]
+    first_steps: List[str]
+
+
+class IdeaSchema(BaseModel):
+    problem_title: str
+    problem_description: str
+    root_cause: str
+    target_users: str
+    market_region: str = Field(default="Egypt or MENA")
+    why_now: str
+
+    solution_name: str
+    solution_description: str
+    key_features: List[str]
+    technology_stack: List[str]
+
+    business_model: BusinessModelSchema
+    market_analysis: MarketAnalysisSchema
+    feasibility: FeasibilitySchema
+
+    novelty_score: int = Field(ge=0, le=100)
+
+    impact: ImpactSchema
+    mvp_plan: MvpPlanSchema
+
+
+# ==========================================================
+# 🔹 REQUEST
+# ==========================================================
 
 class ChatRequest(BaseModel):
     content: str = Field(
         ..., 
-        description="The user's message or problem description",
+        description="User message",
         min_length=1,
         examples=[
             "I want to solve expensive education in Egypt",
@@ -20,36 +98,39 @@ class ChatRequest(BaseModel):
             "Tell me more about the business model"
         ]
     )
-    conversationId: int = Field(
+
+    conversationId: str = Field(
         ...,
-        description="Unique conversation identifier",
-        examples=[123, 456, 789]
+        description="Conversation ID",
+        examples=["123", "456"]
     )
-    clientMessageId: str = Field(
-        ...,
-        description="Unique message identifier from client",
-        examples=["msg_001", "msg_002"]
+
+    clientMessageId: Optional[str] = Field(
+        default=None,
+        description="Client message ID"
     )
+
     isNewConversation: bool = Field(
-        default=False,
-        description="Whether this starts a new conversation"
+        ...,
+        description="Is new conversation"
     )
-    domain: list[str] = Field(
-        default=["general"],
-        description="Business domain/sector",
-        examples=[["education", "healthcare"], ["technology", "transportation", "finance"]]
+
+    domain: Optional[str] = Field(
+        default=None,
+        description="Business domain"
     )
+
     data: Optional[Dict[str, Any]] = Field(
         default=None,
-        description="Previous idea data (for follow-up requests)"
+        description="Previous idea data"
     )
-    
+
     class Config:
         json_schema_extra = {
             "examples": [
                 {
                     "content": "I want to solve expensive education in Egypt",
-                    "conversationId": 123,
+                    "conversationId": "123",
                     "clientMessageId": "msg_001",
                     "isNewConversation": True,
                     "domain": "education",
@@ -57,72 +138,40 @@ class ChatRequest(BaseModel):
                 },
                 {
                     "content": "Give me a startup idea in healthcare",
-                    "conversationId": 124,
+                    "conversationId": "124",
                     "clientMessageId": "msg_002",
                     "isNewConversation": True,
                     "domain": "healthcare",
                     "data": None
-                },
-                {
-                    "content": "Tell me more about the business model",
-                    "conversationId": 123,
-                    "clientMessageId": "msg_003",
-                    "isNewConversation": False,
-                    "domain": "education",
-                    "data": {
-                        "problem_title": "Expensive Education",
-                        "solution_name": "EduFlex"
-                    }
                 }
             ]
         }
 
 
+# ==========================================================
+#  RESPONSE
+# ==========================================================
+
 class ChatResponse(BaseModel):
-    content: str = Field(
-        ...,
-        description="The AI response message"
-    )
-    conversationId: int = Field(
-        ...,
-        description="Conversation identifier"
-    )
-    clientMessageId: str = Field(
-        ...,
-        description="The message ID from the request"
-    )
-    conversation_title: Optional[str] = Field(
-        default=None,
-        description="Title for new conversations"
-    )
-    role: str = Field(
-        default="ai",
-        description="Role of the responder (ai/user)",
-        examples=["ai"]
-    )
-    is_idea_saved: bool = Field(
-        default=False,
-        description="Whether the idea was saved to database"
-    )
-    is_full_idea: bool = Field(
-        ...,
-        description="Whether this response contains a full startup idea"
-    )
-    data: Optional[Dict[str, Any]] = Field(
-        default=None,
-        description="Full idea data structure (populated when is_full_idea=true)"
-    )
-    inspired_by: Optional[List[str]] = Field(
-        default=None,
-        description="List of problems or ideas that inspired this solution"
-    )
-    
+    content: str
+    conversationId: str
+
+    clientMessageId: Optional[str] = None
+    conversation_title: Optional[str] = None
+
+    role: str = "ai"
+    is_idea_saved: bool = False
+    is_full_idea: bool
+
+    data: Optional[Dict[str, Any]] = None
+    inspired_by: Optional[List[str]] = None
+
     class Config:
         json_schema_extra = {
             "examples": [
                 {
                     "content": "EduFlex is an online education platform...",
-                    "conversationId": 123,
+                    "conversationId": "123",
                     "clientMessageId": "msg_001",
                     "conversation_title": "Education Solution",
                     "role": "ai",
@@ -138,7 +187,7 @@ class ChatResponse(BaseModel):
                 },
                 {
                     "content": "The business model includes subscription fees...",
-                    "conversationId": 123,
+                    "conversationId": "123",
                     "clientMessageId": "msg_003",
                     "conversation_title": None,
                     "role": "ai",

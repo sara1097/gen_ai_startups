@@ -1,5 +1,6 @@
 import os
 from huggingface_hub import InferenceClient
+from app.config.settings import get_settings
 
 
 class HFEmbeddingProvider:
@@ -8,7 +9,11 @@ class HFEmbeddingProvider:
     """
 
     def __init__(self):
-        self.client = InferenceClient(token=os.getenv("HF_TOKEN"))
+        settings = get_settings()
+        
+        self.client = InferenceClient( 
+            token=settings.HF_TOKEN
+            )
         self.model = "sentence-transformers/paraphrase-multilingual-mpnet-base-v2"
 
     def encode(self, text: str):

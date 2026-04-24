@@ -43,7 +43,7 @@ class TestRetrieveTopK:
         mock_result.points = points
         mock_qdrant.query_points.return_value = mock_result
 
-        from app.src.engine.rag.retriver import retrieve_topk
+        from startups_ai_generator.app.src.engine.rag.retriever import retrieve_topk
         results = retrieve_topk("payment problem", k=5, sector="Finance")
 
         assert len(results) == 5
@@ -71,7 +71,7 @@ class TestRetrieveTopK:
         mock_result.points = points
         mock_qdrant.query_points.return_value = mock_result
 
-        from app.src.engine.rag.retriver import retrieve_topk
+        from startups_ai_generator.app.src.engine.rag.retriever import retrieve_topk
         results = retrieve_topk("health problem", k=5)
 
         assert len(results) == 1
@@ -103,7 +103,7 @@ class TestRetrieveTopK:
 
         mock_qdrant.query_points.side_effect = [few_results, many_results]
 
-        from app.src.engine.rag.retriver import retrieve_topk
+        from startups_ai_generator.app.src.engine.rag.retriever import retrieve_topk
         results = retrieve_topk("problem", k=5, sector="Finance")
 
         # اتنادت مرتين — مرة بـ filter ومرة من غيره

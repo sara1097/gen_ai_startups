@@ -7,8 +7,8 @@ from app.src.engine.core.intent_classification import (
     detect_language, 
     extract_problem_and_requirements
 )
-from app.src.engine.rag.retriver import retrieve_topk
-from app.src.prompt_Engineering.tamplates import FULL_IDEA_TEMPLATE, build_follow_up_prompt, build_general_chat_prompt, build_new_idea_prompt
+from startups_ai_generator.app.src.engine.rag.retriever import retrieve_topk
+from startups_ai_generator.app.src.prompt_Engineering.templates import FULL_IDEA_TEMPLATE, build_follow_up_prompt, build_general_chat_prompt, build_new_idea_prompt
 from app.src.llm.groq_provider import groq_provider
 import logging
 
