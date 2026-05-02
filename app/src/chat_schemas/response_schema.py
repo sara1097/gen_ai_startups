@@ -26,7 +26,10 @@ class ExtractedRequirements(BaseModel):
     questions: List[str] = []
     constraints: List[str] = []
 
-
+class IntentAndExtractionSchema(BaseModel):
+    intent: IntentSchema
+    extracted: ExtractedRequirements
+    
 # ==========================================================
 # IDEA SCHEMA 
 # ==========================================================

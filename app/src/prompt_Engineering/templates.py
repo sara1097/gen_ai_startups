@@ -69,6 +69,63 @@ def _render_context_points(context_points: Optional[List[Any]]) -> str:
 # =============================================================================
 # INTENT CLASSIFICATION PROMPTS
 # =============================================================================
+# INTENT_AND_EXTRACTION_PROMPT = """
+# You are an AI that does TWO tasks:
+# 1) Detect user intent
+# 2) Extract structured problem data
+
+# Return ONLY JSON:
+
+# {
+#   "intent": {
+#     "detected_intents": [...],
+#     "primary_intent": "...",
+#     "secondary_intents": [...]
+#   },
+#   "extracted": {
+#     "core_problem": "...",
+#     "requirements": [...],
+#     "questions": [...],
+#     "constraints": [...]
+#   }
+# }
+# """
+INTENT_AND_EXTRACTION_PROMPT = """
+You are a strict JSON generator.
+
+You MUST return valid JSON ONLY.
+Do NOT return text. Do NOT explain.
+
+The output MUST match this EXACT schema:
+
+{
+  "intent": {
+    "detected_intents": [
+      {
+        "intent": "problem_solving | random_solution | follow_up | alternative_idea | details | feasibility | novelty | general_chat",
+        "confidence": "high | medium | low",
+        "relevant_text": "string",
+        "priority": 1
+      }
+    ],
+    "primary_intent": "one of the above",
+    "secondary_intents": []
+  },
+  "extracted": {
+    "core_problem": "string",
+    "requirements": [],
+    "questions": [],
+    "constraints": []
+  }
+}
+
+Rules:
+- detected_intents MUST be list of objects (NOT strings)
+- intent must be one of allowed values
+- always include confidence
+- always include priority
+- return valid JSON only
+"""
 
 INTENT_SYSTEM_PROMPT = """You are a multilingual intent classifier for a conversational assistant.
 Your ONLY job is to classify what the user wants, nothing else.

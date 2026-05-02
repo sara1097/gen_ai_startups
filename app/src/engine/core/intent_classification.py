@@ -4,14 +4,15 @@ import logging
 import re
 from typing import Optional
 
-from app.src.chat_schemas.response_schema import IntentSchema, ExtractedRequirements
+from app.src.chat_schemas.response_schema import IntentAndExtractionSchema, IntentSchema, ExtractedRequirements
 from app.src.engine.core.parsers import QwenParser
 from app.src.llm.groq_provider import GroqProvider
 from app.src.prompt_Engineering.templates import (
     INTENT_SYSTEM_PROMPT,
     build_intent_user_prompt,
     PROBLEM_EXTRACTION_SYSTEM_PROMPT,
-    build_problem_extraction_prompt
+    build_problem_extraction_prompt,
+    INTENT_AND_EXTRACTION_PROMPT
 )
 
 logger = logging.getLogger(__name__)
@@ -92,6 +93,21 @@ class IntentClassifier:
             logger.error(f"Extraction failed: {e}")
             return self._get_default_extraction(user_input)
 
+
+    def classify_and_extract(self, user_input: str):
+        messages = [
+            {"role": "system", "content": INTENT_AND_EXTRACTION_PROMPT},
+            {"role": "user", "content": user_input}
+        ]
+
+        raw = self.llm.generate_structured(messages, temperature=0.1)
+
+        parsed = QwenParser.parse_and_validate(
+            raw,
+            IntentAndExtractionSchema
+        )
+
+        return parsed
     # =========================
     # GUARDS SYSTEM 
     # =========================

@@ -26,9 +26,14 @@ class ChatService:
         # =========================
         # 1. INTENT + EXTRACTION
         # =========================
-        intent_data = self.classifier.classify(request.content)
-        extracted = self.classifier.extract_requirements(request.content)
+        # intent_data = self.classifier.classify(request.content)
+        # extracted = self.classifier.extract_requirements(request.content)
 
+        combined = self.classifier.classify_and_extract(request.content)
+
+        intent_data = combined.intent
+        extracted = combined.extracted
+        
         primary_intent = intent_data.primary_intent
 
         # =========================
